@@ -64,9 +64,9 @@
     
 }
 - (IBAction)reset {
-    self.flipCount = 0;
-    self.game = nil;
-    [self updateUI];
+    UIAlertView *updateAlert = [[UIAlertView alloc] initWithTitle: @"Matchismo" message: @"Do you really want to reset the game?" delegate: self cancelButtonTitle: @"Yes"  otherButtonTitles:@"No",nil];
+    
+    [updateAlert show];
 }
 
 
@@ -77,6 +77,16 @@
     [self updateUI];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==0)
+    {
+        self.flipCount = 0;
+        self.game = nil;
+        [self updateUI];
+    }
+    
+}
 
 
 @end
