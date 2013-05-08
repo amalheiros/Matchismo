@@ -19,6 +19,11 @@
 #define MISMATCH_PENALTY 2
 #define FLIP_COST 1
 
+- (void)setScore:(int)score
+{
+    _score = score;
+}
+
 -(void) flipCardAtIndex:(NSUInteger) index
 {
     Card *card = [self cardAtIndex:index];

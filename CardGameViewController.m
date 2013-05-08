@@ -11,11 +11,14 @@
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
+
 @property (strong, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (nonatomic) int flipCount;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (strong,nonatomic) CardMatchingGame *game;
+@property (strong, nonatomic) UIImage* cardBackImage;
+
 @end
 
 @implementation CardGameViewController
@@ -39,6 +42,12 @@
     [self updateUI];
 }
 
+- (UIImage *)cardBackImage {
+    if (!_cardBackImage) _cardBackImage = [UIImage imageNamed:@"white.jpg"];
+    
+    return _cardBackImage;
+}
+
 - (void) updateUI
 {
     for(UIButton *cardButton in self.cardButtons){
@@ -47,10 +56,17 @@
         [cardButton setTitle:card.contents forState: UIControlStateSelected|UIControlStateDisabled];
         cardButton.selected = card.isFaceUp;
         cardButton.enabled = !card.isUnplayable;
-        cardButton.alpha = (card.isUnplayable ? 0.3 : 1.0);
+         [cardButton setBackgroundImage:self.cardBackImage forState: UIControlStateSelected|UIControlStateDisabled];
+        cardButton.alpha = (card.isUnplayable ? 0.8 : 1.0);
     }
     
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d",self.game.score];
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    
+}
+- (IBAction)reset {
+    self.flipCount = 0;
+    self.game = nil;
+    [self updateUI];
 }
 
 
